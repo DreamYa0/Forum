@@ -31,9 +31,6 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public void save(User user) {
-        user.setUserType(1);
-        user.setLocked(0);
-        user.setCredit(0);
         user.setLastVisit(new Date());
         userMapper.register(user);
 

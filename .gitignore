@@ -92,4 +92,3 @@ fabric.properties
 
 src/main/java/com/zbj/forum/utils/
 src/test/
-/src/main/resources/jdbc.properties
