@@ -83,7 +83,7 @@
         <aop:advisor advice-ref="advice"
                      pointcut="execution(* com.zbj.forum.service..*.*(..))"/>
     </aop:config>
-    <!--配置通知-使Service方法支持事务 -->
+    <!--配置通知-使Service层方法支持事务功能 -->
     <tx:advice id="advice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
