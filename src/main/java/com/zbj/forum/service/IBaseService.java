@@ -20,7 +20,7 @@ public interface IBaseService<T> {
     void delete(Integer id) throws Exception;
 
     // 查询
-    T get(Integer id) throws Exception;
+    T get(Integer id) throws NullPointerException;
 
     // 高级查询+分页
     PageList findPage(BaseQuery baseQuery);

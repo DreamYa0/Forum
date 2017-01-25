@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SpriteFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" CssFileName="../images" ImageName="icons" IsPhone="false" xmlns="CssSprite">
+  <SpriteList>
+    <Sprite Path="school.png" LocationX="0" LocationY="0" />
+    <Sprite Path="poverty.png" LocationX="0" LocationY="50" />
+    <Sprite Path="timeset.png" LocationX="0" LocationY="100" />
+    <Sprite Path="submit.png" LocationX="0" LocationY="150" />
+    <Sprite Path="notices.png" LocationX="0" LocationY="200" />
+    <Sprite Path="college.png" LocationX="0" LocationY="250" />
+    <Sprite Path="alert.png" LocationX="0" LocationY="300" />
+    <Sprite Path="notice.png" LocationX="0" LocationY="350" />
+    <Sprite Path="dynamic.png" LocationX="0" LocationY="400" />
+  </SpriteList>
+</SpriteFile>

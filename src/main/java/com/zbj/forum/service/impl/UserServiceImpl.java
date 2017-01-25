@@ -62,7 +62,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User get(Integer id) throws Exception{
+    public User get(Integer id) throws NullPointerException{
         User user = userMapper.get(id);
         return user;
     }
