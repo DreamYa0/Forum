@@ -45,7 +45,13 @@ public class UserServiceImpl implements IUserService {
      * @param id
      */
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws Exception {
+        User user = this.get(id);
+        if (user != null) {
+            userMapper.delete(id);
+        } else {
+            throw new Exception();
+        }
 
     }
 
@@ -56,8 +62,9 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User get(Integer id) {
-        return null;
+    public User get(Integer id) throws Exception{
+        User user = userMapper.get(id);
+        return user;
     }
 
     @Override
@@ -87,7 +94,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User getUserByUserName(String userName) {
+    public User getUserByUserName(String userName){
         User user = userMapper.getUserByUserName(userName);
         return user;
     }

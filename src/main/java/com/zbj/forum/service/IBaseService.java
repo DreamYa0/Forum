@@ -17,10 +17,10 @@ public interface IBaseService<T> {
     void update(T t);
 
     // 删除
-    void delete(Integer id);
+    void delete(Integer id) throws Exception;
 
     // 查询
-    T get(Integer id);
+    T get(Integer id) throws Exception;
 
     // 高级查询+分页
     PageList findPage(BaseQuery baseQuery);

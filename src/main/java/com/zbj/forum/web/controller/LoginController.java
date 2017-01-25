@@ -54,7 +54,7 @@ public class LoginController {
                     return new CommonResult(CommonResult.getStatusError());
                 }
             }
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new CommonResult(false, CommonResult.getStatusError(), "用户名不存在!",null);
         }
