@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zbj.forum.mapper.BoardMapper">
+
+    <!-- 字段映射 -->
+    <resultMap id="BoardResultMap" type="com.zbj.forum.entity.Board">
+        <id column="id" property="id" jdbcType="NUMERIC"/>
+        <result column="board_id" jdbcType="NUMERIC" property="boardId"/>
+        <result column="board_name" jdbcType="VARCHAR" property="boardName"/>
+        <result column="board_desc" jdbcType="VARCHAR" property="boardDesc"/>
+        <result column="board_num" jdbcType="NUMERIC" property="boardNum"/>
+    </resultMap>
+    <!-- 所有字段 -->
+    <sql id="Board_Column_List">
+        board_id
+        ,board_name
+        ,obj_board_descid
+        ,board_num
+    </sql>
+
+    <!-- 查询全部 -->
+    <select id="getAll" resultMap="BoardResultMap">
+
+    </select>
+
+    <!-- 查询统计数 -->
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(id) from t_board
+    </select>
+
+    <!--根据论坛版块ID获取论坛版块信息-->
+    <select id="getBoardMassage" parameterType="Integer" resultMap="BoardResultMap">
+        SELECT
+        <include refid="Board_Column_List"/>
+        from t_board t
+        WHERE t.id=#{id}
+    </select>
+
+</mapper>
