@@ -34,8 +34,8 @@
 
     <!--用户注册-->
     <insert id="register" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-        insert INTO t_user (user_name,password,user_type,locked,credit,last_visit)
-        VALUES (#{userName},#{password},#{userType},#{locked},#{credit},#{lastVisit})
+        insert INTO t_user (user_name,password,last_visit)
+        VALUES (#{userName},#{password},#{lastVisit})
     </insert>
 
     <!--根据用户名获取用户信息-->
