@@ -12,6 +12,7 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
     /**
      * 用户注册
+     *
      * @param user
      * @return
      */
@@ -19,6 +20,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 根据用户名获取用户信息
+     *
      * @param userName
      * @return
      */
@@ -26,12 +28,14 @@ public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 查询所有用户信息
+     *
      * @return
      */
     List<User> getAllUsers();
 
     /**
      * 用户登录
+     *
      * @param user
      * @return
      */
@@ -39,6 +43,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     /**
      * 更新积分
+     *
      * @param user
      */
     void updateCredit(User user);

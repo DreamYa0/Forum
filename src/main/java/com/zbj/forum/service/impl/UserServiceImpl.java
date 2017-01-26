@@ -60,7 +60,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User get(Integer id) throws NullPointerException{
+    public User get(Integer id) throws NullPointerException {
         User user = userMapper.get(id);
         return user;
     }
@@ -81,7 +81,7 @@ public class UserServiceImpl implements IUserService {
      * @param user
      */
     @Override
-    public void update(User user) throws Exception{
+    public void update(User user) throws Exception {
         String userName = user.getUserName();
         User queryUser = userMapper.getUserByUserName(userName);
         if (queryUser == null) {
@@ -97,7 +97,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User getUserByUserName(String userName){
+    public User getUserByUserName(String userName) {
         User user = userMapper.getUserByUserName(userName);
         return user;
     }
@@ -108,8 +108,8 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public List<User> getAllUsers() throws Exception{
-        List<User> userList=userMapper.getAllUsers();
+    public List<User> getAllUsers() throws Exception {
+        List<User> userList = userMapper.getAllUsers();
         if (userList != null || userList.size() > 0) {
             return userList;
         } else {
@@ -128,7 +128,7 @@ public class UserServiceImpl implements IUserService {
         User queryUser = null;
         if (u != null) {
             /*没登录一次增加5点积分*/
-            u.setCredit(u.getCredit()+5);
+            u.setCredit(u.getCredit() + 5);
             /*更新访问时间*/
             u.setLastVisit(new Date());
             userMapper.updateCredit(u);

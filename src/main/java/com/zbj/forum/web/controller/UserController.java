@@ -3,7 +3,6 @@ package com.zbj.forum.web.controller;
 import com.zbj.forum.entity.User;
 import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.service.IUserService;
-import com.zbj.forum.web.common.CommonConstant;
 import com.zbj.forum.web.common.CommonResult;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.zbj.forum.utils.CheckDataUtil.updateUserCheck;
