@@ -19,7 +19,7 @@
     <!--自动静态资源放行驱动-->
     <mvc:default-servlet-handler/>
 
-    <!--开启MVC注解支持-->
+    <!--开启MVC注解初始化7个转换器-->
     <mvc:annotation-driven/>
 
     <!--配置处理器适配器  -->
@@ -28,8 +28,16 @@
     <bean id="handlerAdapter"
           class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
 
-    <!--jackson配置-->
-    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+    <!--jackson配置，接收json的参数-->
+    <!--<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>-->
+    <!--<bean id="gsonHttpMessageConverter"-->
+    <!--class="org.springframework.http.converter.json.GsonHttpMessageConverter">-->
+    <!--<property name="supportedMediaTypes">-->
+    <!--<list>-->
+    <!--<value>application/json;charset=UTF-8</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--</bean>-->
 
     <!-- 配置springMVC处理上传文件的信息 -->
     <bean id="multipartResolver"
@@ -39,14 +47,6 @@
         <property name="maxInMemorySize" value="40960"/>
     </bean>
 
-    <!--接收json的参数-->
-    <bean id="gsonHttpMessageConverter"
-          class="org.springframework.http.converter.json.GsonHttpMessageConverter">
-        <property name="supportedMediaTypes">
-            <list>
-                <value>application/json;charset=UTF-8</value>
-            </list>
-        </property>
-    </bean>
+
 
 </beans>
