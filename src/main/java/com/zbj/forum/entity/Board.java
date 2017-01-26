@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by DreamYao on 2017/1/24.
  */
 public class Board implements Serializable{
-
+    private static final long serialVersionUID = -4309350821355770567L;
     /**
      * 论坛版块ID
      */

@@ -12,12 +12,21 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
     http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
     <!-- 启动包扫描功能，以便注册带有@Controller、@Service、@repository、@Component等注解的类成为spring的bean -->
     <context:component-scan base-package="com.zbj.forum.web.controller"/>
-    <!--&lt;!&ndash;自动静态资源放行驱动&ndash;&gt;-->
-    <!--<mvc:default-servlet-handler/>-->
-    <!--注册3个视图解析器-->
+
+    <!--自动静态资源放行驱动-->
+    <mvc:default-servlet-handler/>
+
+    <!--开启MVC注解支持-->
     <mvc:annotation-driven/>
+
+    <!--配置处理器适配器  -->
+    <bean id="handlerMapping"
+          class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+    <bean id="handlerAdapter"
+          class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
 
     <!--jackson配置-->
     <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
@@ -35,7 +44,7 @@
           class="org.springframework.http.converter.json.GsonHttpMessageConverter">
         <property name="supportedMediaTypes">
             <list>
-                <value>text/html;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
             </list>
         </property>
     </bean>

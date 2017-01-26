@@ -7,6 +7,7 @@ import java.util.Date;
  * Created by DreamYao on 2017/1/24.
  */
 public class LoginLog implements Serializable {
+    private static final long serialVersionUID = -7318278109743008657L;
     /**
      * 日志ID
      */

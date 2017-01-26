@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by DreamYao on 2017/1/24.
  */
 public class Post implements Serializable {
-
+    private static final long serialVersionUID = 3053011612777930085L;
     /**
      * 帖子ID
      */

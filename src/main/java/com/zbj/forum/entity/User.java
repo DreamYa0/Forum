@@ -8,7 +8,7 @@ import java.util.Set;
  * Created by DreamYao on 2017/1/24.
  */
 public class User implements Serializable {
-
+    private static final long serialVersionUID = -1118105041735759174L;
     /**
      * 用户ID
      */

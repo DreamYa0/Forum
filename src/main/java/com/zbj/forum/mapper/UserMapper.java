@@ -40,4 +40,10 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     User login(User user);
+
+    /**
+     * 更新积分
+     * @param user
+     */
+    void updateCredit(User user);
 }

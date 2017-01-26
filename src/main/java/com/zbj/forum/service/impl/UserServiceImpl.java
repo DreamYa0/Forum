@@ -151,9 +151,13 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User login(User user) {
         User u = userMapper.login(user);
+        User queryUser = null;
         if (u != null) {
-            u.setPassword(null);
+            u.setCredit(u.getCredit()+5);
+            u.setLastVisit(new Date());
+            userMapper.updateCredit(u);
+            queryUser = userMapper.getUserByUserName(user.getUserName());
         }
-        return u;
+        return queryUser;
     }
 }

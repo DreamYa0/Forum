@@ -1,6 +1,7 @@
 package com.zbj.forum.web.controller;
 
 import com.zbj.forum.entity.User;
+import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.service.IUserService;
 import com.zbj.forum.web.common.CommonResult;
 import org.json.JSONObject;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+
+import static com.zbj.forum.utils.CheckDataUtil.updateUserCheck;
 
 /**
  * Created by DreamYao on 2017/1/24.
@@ -103,8 +106,8 @@ public class UserController {
      * @param  {"userName":""}
      */
     @ResponseBody
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public CommonResult updateUser(User user,HttpSession session){
+    @RequestMapping(value = "/update")
+    public CommonResult updateUser(@RequestBody User user,HttpSession session){
         try {
             User loginUser = (User) session.getAttribute("userInSession");
             if (loginUser.getUserType() != 2) {
@@ -114,9 +117,18 @@ public class UserController {
             e.printStackTrace();
             return new CommonResult("请先登录!");
         }
-        if (user == null || user.getUserName() == null || user.getUserName().isEmpty()) {
+        if (!updateUserCheck(user)) {
             return new CommonResult("参数错误!");
         }
-        return null;
+        try {
+            userService.update(user);
+        } catch (CRUDException e) {
+            e.printStackTrace();
+            return new CommonResult("更新的用户不存在!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommonResult("系统错误!");
+        }
+        return new CommonResult(true,CommonResult.getStatusSuccess(),"用户更新成功!");
     }
 }

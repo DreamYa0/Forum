@@ -29,7 +29,7 @@
     <!--根据用户信息更新用户-->
     <update id="update" parameterType="User">
         UPDATE t_user set user_type=#{userType},
-        locked=#{locked},credit=#{credit},last_visit=#{lastVisit},last_ip=#{lastIp} WHERE user_name=#{userName}
+        locked=#{locked},credit=#{credit} WHERE user_name=#{userName}
     </update>
 
     <!--用户注册-->
@@ -68,4 +68,10 @@
         WHERE t.user_id=#{id}
     </select>
 
+    <!--根据用户名更新用户积分和登录时间-->
+    <update id="updateCredit" parameterType="User">
+        UPDATE t_user
+        SET credit=#{credit},last_visit=#{lastVisit}
+        WHERE user_name=#{userName}
+    </update>
 </mapper>

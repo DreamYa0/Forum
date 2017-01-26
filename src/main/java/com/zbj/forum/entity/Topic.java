@@ -7,6 +7,7 @@ import java.util.Date;
  * Created by DreamYao on 2017/1/24.
  */
 public class Topic implements Serializable {
+    private static final long serialVersionUID = -4585310526628240316L;
     /**
      * 帖子ID
      */

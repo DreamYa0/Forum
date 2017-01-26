@@ -47,7 +47,7 @@ public class LoginController {
                     if (u != null) {
                         session.setAttribute(CommonConstant.USER_IN_SESSION, u);
                     } else {
-                        return new CommonResult(false, CommonResult.getStatusError(), "密码错误!",null);
+                        return new CommonResult("密码错误!");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -56,9 +56,9 @@ public class LoginController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new CommonResult(false, CommonResult.getStatusError(), "用户名不存在!",null);
+            return new CommonResult("用户名不存在!");
         }
-        return new CommonResult(true, CommonResult.STATUS_SUCCESS,"登录成功!", null);
+        return new CommonResult(true, CommonResult.STATUS_SUCCESS,"登录成功!");
     }
 
     /**
@@ -74,7 +74,7 @@ public class LoginController {
         try {
             user = (User) session.getAttribute("userInSession");
             if (user == null) {
-                return new CommonResult(false, CommonResult.NO_PERMISSION, "当前用户没有登录!",null);
+                return new CommonResult("当前用户没有登录!");
             }
         } catch (Exception e) {
             e.printStackTrace();
