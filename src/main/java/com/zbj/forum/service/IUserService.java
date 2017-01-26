@@ -13,7 +13,7 @@ public interface IUserService extends IBaseService<User>{
      * 更新用户信息
      * @param user
      */
-    void update(User user);
+    void update(User user) throws Exception;
 
     /**
      * 根据用户名获取用户信息

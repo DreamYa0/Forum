@@ -1,6 +1,7 @@
 package com.zbj.forum.service.impl;
 
 import com.zbj.forum.entity.User;
+import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.mapper.LoginLogMapper;
 import com.zbj.forum.mapper.UserMapper;
 import com.zbj.forum.query.BaseQuery;
@@ -80,8 +81,13 @@ public class UserServiceImpl implements IUserService {
      * @param user
      */
     @Override
-    public void update(User user) {
-
+    public void update(User user) throws Exception{
+        String userName = user.getUserName();
+        User queryUser = userMapper.getUserByUserName(userName);
+        if (queryUser == null) {
+            throw new CRUDException(CRUDException.UPDATE_EXCEPTION, "更新的用户不存在");
+        }
+        userMapper.update(user);
     }
 
     /**

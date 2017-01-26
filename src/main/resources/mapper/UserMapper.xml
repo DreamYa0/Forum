@@ -27,10 +27,10 @@
     </sql>
 
     <!--根据用户信息更新用户-->
-    <insert id="updateUser" parameterType="User">
-        UPDATE t_user set user_name=#{userName},password=#{password},user_type=#{userType},
-        locked=#{locked},credit=#{credit},last_visit=#{lastVisit},last_ip=#{lastIp} WHERE user_id=#{id}
-    </insert>
+    <update id="update" parameterType="User">
+        UPDATE t_user set password=#{password},user_type=#{userType},
+        locked=#{locked},credit=#{credit},last_visit=#{lastVisit},last_ip=#{lastIp} WHERE user_name=#{userName}
+    </update>
 
     <!--用户注册-->
     <insert id="register" parameterType="User" useGeneratedKeys="true" keyProperty="id">
@@ -67,4 +67,5 @@
         from t_user t
         WHERE t.user_id=#{id}
     </select>
+
 </mapper>

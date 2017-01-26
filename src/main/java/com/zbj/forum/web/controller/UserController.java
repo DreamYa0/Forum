@@ -96,4 +96,15 @@ public class UserController {
         }
         return new CommonResult(true, CommonResult.STATUS_SUCCESS, "删除用户成功!", null);
     }
+
+    /**
+     * 用户更新
+     *
+     * @param  {"userName":""}
+     */
+    @ResponseBody
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public CommonResult updateUser(User user,HttpSession session){
+        return null;
+    }
 }

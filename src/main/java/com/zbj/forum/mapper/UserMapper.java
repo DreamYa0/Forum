@@ -3,8 +3,6 @@ package com.zbj.forum.mapper;
 import com.zbj.forum.entity.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 /**
  * Created by DreamYao on 2017/1/24.
  */
@@ -16,18 +14,6 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     void register(User user);
-
-    /**
-     * 删除用户信息
-     * @param id
-     */
-    void deleteUser(Integer id);
-
-    /**
-     * 根据用户信息更新用户
-     * @param user
-     */
-    void updateUser(User user);
 
     /**
      * 根据用户名获取用户信息

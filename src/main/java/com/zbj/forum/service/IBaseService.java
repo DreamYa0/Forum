@@ -14,7 +14,7 @@ public interface IBaseService<T> {
     void save(T t);
 
     // 编辑信息
-    void update(T t);
+    void update(T t) throws Exception;
 
     // 删除
     void delete(Integer id) throws Exception;
