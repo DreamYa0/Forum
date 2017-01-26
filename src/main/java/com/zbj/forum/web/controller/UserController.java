@@ -101,7 +101,7 @@ public class UserController {
     }
 
     /**
-     * 用户信息更新
+     * 用户信息更新(包括密码修好、用户锁定、用户解锁)
      *
      * @param
      */

@@ -22,19 +22,6 @@ public interface IUserService extends IBaseService<User>{
      */
     User getUserByUserName(String userName);
 
-
-    /**
-     * 根据用户名锁定用户
-     * @param userName
-     */
-    void lockUser(String userName);
-
-    /**
-     * 根据用户名解锁用户
-     * @param
-     */
-    void unlockUser(String username);
-
     /**
      * 根据用户名查询用户信息
      * @param userName

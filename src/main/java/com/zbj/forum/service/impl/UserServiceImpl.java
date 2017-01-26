@@ -76,7 +76,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     /**
-     * 更新用户信息
+     * 更新用户信息(包括密码修好、用户锁定、用户解锁)
      *
      * @param user
      */
@@ -100,26 +100,6 @@ public class UserServiceImpl implements IUserService {
     public User getUserByUserName(String userName){
         User user = userMapper.getUserByUserName(userName);
         return user;
-    }
-
-    /**
-     * 根据用户名锁定用户
-     *
-     * @param userName
-     */
-    @Override
-    public void lockUser(String userName) {
-
-    }
-
-    /**
-     * 根据用户名解锁用户
-     *
-     * @param username
-     */
-    @Override
-    public void unlockUser(String username) {
-
     }
 
     /**
@@ -153,7 +133,9 @@ public class UserServiceImpl implements IUserService {
         User u = userMapper.login(user);
         User queryUser = null;
         if (u != null) {
+            /*没登录一次增加5点积分*/
             u.setCredit(u.getCredit()+5);
+            /*更新访问时间*/
             u.setLastVisit(new Date());
             userMapper.updateCredit(u);
             queryUser = userMapper.getUserByUserName(user.getUserName());
