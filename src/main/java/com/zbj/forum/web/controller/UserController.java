@@ -54,7 +54,6 @@ public class UserController {
                 if (queryUser != null || queryUser.getUserName() != null) {
                     return new CommonResult("用户名已存在");
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -86,7 +85,7 @@ public class UserController {
                 return new CommonResult("当前用户没有登录!");
             }
             Integer userType = user.getUserType();
-            if (userType != 2) {
+            if (userType != MANAGE_USER) {
                 return new CommonResult("此登录的用户没有删除用户权限");
             }
             JSONObject jsonObject = new JSONObject(param);
