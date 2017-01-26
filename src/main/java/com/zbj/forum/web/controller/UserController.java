@@ -101,7 +101,7 @@ public class UserController {
     }
 
     /**
-     * 用户更新
+     * 用户信息更新
      *
      * @param  {"userName":""}
      */

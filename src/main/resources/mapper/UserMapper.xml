@@ -28,8 +28,24 @@
 
     <!--根据用户信息更新用户-->
     <update id="update" parameterType="User">
-        UPDATE t_user set user_type=#{userType},
-        locked=#{locked},credit=#{credit} WHERE user_name=#{userName}
+        UPDATE t_user set
+        <if test="password !=null">
+            password=#{password},
+        </if>
+        <if test="userType !=null">
+            user_type=#{userType},
+        </if>
+        <if test="locked !=null">
+            locked=#{locked},
+        </if>
+        <if test="credit !=null">
+            credit=#{credit},
+        </if>
+        /*把更新必填字段放最后*/
+        <if test="userName !=null">
+            user_name=#{userName}
+        </if>
+        WHERE user_name=#{userName}
     </update>
 
     <!--用户注册-->
