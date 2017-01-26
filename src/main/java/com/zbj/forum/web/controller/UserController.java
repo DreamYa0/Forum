@@ -68,12 +68,12 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public CommonResult deleteUser(@RequestBody String param, HttpSession session){
+    public CommonResult deleteUser(@RequestBody String param, HttpSession session) {
         Integer loginUserId;
         Integer deleteUserId;
         try {
             User user = (User) session.getAttribute("userInSession");
-            loginUserId=user.getId();
+            loginUserId = user.getId();
             if (user == null) {
                 return new CommonResult("当前用户没有登录!");
             }
@@ -85,7 +85,7 @@ public class UserController {
             String userName = jsonObject.get("userName").toString();
             try {
                 User queryUser = userService.getUserByUserName(userName);
-                deleteUserId=queryUser.getId();
+                deleteUserId = queryUser.getId();
                 if (loginUserId == deleteUserId) {
                     return new CommonResult("用户不能删除自己!");
                 }
@@ -103,11 +103,11 @@ public class UserController {
     /**
      * 用户信息更新
      *
-     * @param  {"userName":""}
+     * @param
      */
     @ResponseBody
-    @RequestMapping(value = "/update")
-    public CommonResult updateUser(@RequestBody User user,HttpSession session){
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public CommonResult updateUser(@RequestBody User user, HttpSession session) {
         try {
             User loginUser = (User) session.getAttribute("userInSession");
             if (loginUser.getUserType() != 2) {
@@ -129,6 +129,6 @@ public class UserController {
             e.printStackTrace();
             return new CommonResult("系统错误!");
         }
-        return new CommonResult(true,CommonResult.getStatusSuccess(),"用户更新成功!");
+        return new CommonResult(true, CommonResult.getStatusSuccess(), "用户更新成功!");
     }
 }

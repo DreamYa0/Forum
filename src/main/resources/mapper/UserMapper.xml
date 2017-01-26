@@ -41,7 +41,7 @@
         <if test="credit !=null">
             credit=#{credit},
         </if>
-        /*把更新必填字段放最后*/
+        /*把更新必填字段放最后,否则可能会出现多个,号导致报错*/
         <if test="userName !=null">
             user_name=#{userName}
         </if>
