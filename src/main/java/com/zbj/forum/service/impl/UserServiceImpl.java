@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+import static com.zbj.forum.exception.CRUDException.FIND_EXCEPTION;
+
 /**
  * Created by DreamYao on 2017/1/24.
  */
@@ -97,8 +99,11 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User getUserByUserName(String userName) {
+    public User getUserByUserName(String userName) throws Exception{
         User user = userMapper.getUserByUserName(userName);
+        if (user == null) {
+            throw new CRUDException(FIND_EXCEPTION,"用户名不存在");
+        }
         return user;
     }
 
@@ -113,7 +118,7 @@ public class UserServiceImpl implements IUserService {
         if (userList != null || userList.size() > 0) {
             return userList;
         } else {
-            throw new CRUDException(CRUDException.FIND_EXCEPTION, "数据库中没有用户!");
+            throw new CRUDException(FIND_EXCEPTION, "数据库中没有用户!");
         }
     }
 

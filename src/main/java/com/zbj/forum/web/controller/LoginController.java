@@ -1,9 +1,9 @@
 package com.zbj.forum.web.controller;
 
 import com.zbj.forum.entity.User;
+import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.service.IUserService;
 import com.zbj.forum.web.common.CommonResult;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import static com.zbj.forum.web.common.CommonConstant.CLIENT_SECRET;
 import static com.zbj.forum.web.common.CommonConstant.USER_IN_SESSION;
 import static com.zbj.forum.web.common.CommonResult.STATUS_SUCCESS;
+import static com.zbj.forum.web.common.CommonResult.getStatusError;
 
 /**
  * Created by DreamYao on 2017/1/24.
@@ -29,22 +30,17 @@ public class LoginController {
     /**
      * 用户登录
      *
-     * @param param
+     * @param user
      * @param session
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object loginPost(@RequestBody String param, HttpSession session) {
-        JSONObject jsonObject = new JSONObject(param);
-        String userName = jsonObject.get("userName").toString();
-        String password = jsonObject.get("password").toString();
+    public Object loginPost(@RequestBody User user, HttpSession session) {
+        String userName = user.getUserName();
         try {
             User queryUser = userService.getUserByUserName(userName);
             if (queryUser != null || queryUser.getUserName() != null) {
-                User user = new User();
-                user.setUserName(userName);
-                user.setPassword(password);
                 try {
                     User u = userService.login(user);
                     if (u != null) {
@@ -54,12 +50,15 @@ public class LoginController {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    return new CommonResult(CommonResult.getStatusError());
+                    return new CommonResult(getStatusError());
                 }
             }
-        } catch (Exception e) {
+        } catch (CRUDException e) {
             e.printStackTrace();
             return new CommonResult("用户名不存在!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommonResult("系统异常!");
         }
         return new CommonResult(true, STATUS_SUCCESS,"登录成功!");
     }

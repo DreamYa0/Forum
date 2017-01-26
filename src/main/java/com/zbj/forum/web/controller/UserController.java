@@ -34,17 +34,16 @@ public class UserController {
     /**
      * 用户注册
      *
-     * @param param
+     * @param user
      */
     @ResponseBody
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public CommonResult save(@RequestBody String param) {
+    public CommonResult save(@RequestBody User user) {
         try {
-            JSONObject jsonObject = new JSONObject(param);
-            String userName = jsonObject.get("userName").toString();
-            String password = jsonObject.get("password").toString();
+            String userName = user.getUserName();
+            String password = user.getPassword();
             try {
-                if (jsonObject == null || userName == null || userName.equals("") || password == null || password.equals("")) {
+                if (user == null || userName == null || userName.equals("") || password == null || password.equals("")) {
                     return new CommonResult(false, USER_USERPWD_EMPTY, "用户或密码为空");
                 }
                 User queryUser = userService.getUserByUserName(userName);
@@ -54,9 +53,6 @@ public class UserController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            User user = new User();
-            user.setUserName(userName);
-            user.setPassword(password);
             userService.save(user);
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,25 +64,24 @@ public class UserController {
     /**
      * 用户删除
      *
-     * @param param {"userName":""}
+     * @param user {"userName":""}
      */
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public CommonResult deleteUser(@RequestBody String param, HttpSession session) {
+    public CommonResult deleteUser(@RequestBody User user, HttpSession session) {
         Integer loginUserId;
         Integer deleteUserId;
         try {
-            User user = (User) session.getAttribute("userInSession");
-            loginUserId = user.getId();
-            if (user == null) {
+            User loginUser = (User) session.getAttribute("userInSession");
+            loginUserId = loginUser.getId();
+            if (loginUser == null) {
                 return new CommonResult("当前用户没有登录!");
             }
-            Integer userType = user.getUserType();
+            Integer userType = loginUser.getUserType();
             if (userType != MANAGE_USER) {
                 return new CommonResult("此登录的用户没有删除用户权限");
             }
-            JSONObject jsonObject = new JSONObject(param);
-            String userName = jsonObject.get("userName").toString();
+            String userName = user.getUserName();
             try {
                 User queryUser = userService.getUserByUserName(userName);
                 deleteUserId = queryUser.getId();
