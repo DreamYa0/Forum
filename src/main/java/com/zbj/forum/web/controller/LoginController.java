@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
+import static com.zbj.forum.web.common.CommonConstant.CLIENT_SECRET;
+import static com.zbj.forum.web.common.CommonConstant.USER_IN_SESSION;
+import static com.zbj.forum.web.common.CommonResult.STATUS_SUCCESS;
+
 /**
  * Created by DreamYao on 2017/1/24.
  */
@@ -45,7 +49,7 @@ public class LoginController {
                 try {
                     User u = userService.login(user);
                     if (u != null) {
-                        session.setAttribute(CommonConstant.USER_IN_SESSION, u);
+                        session.setAttribute(USER_IN_SESSION, u);
                     } else {
                         return new CommonResult("密码错误!");
                     }
@@ -58,7 +62,7 @@ public class LoginController {
             e.printStackTrace();
             return new CommonResult("用户名不存在!");
         }
-        return new CommonResult(true, CommonResult.STATUS_SUCCESS,"登录成功!");
+        return new CommonResult(true, STATUS_SUCCESS,"登录成功!");
     }
 
     /**
@@ -80,7 +84,7 @@ public class LoginController {
             e.printStackTrace();
             return new CommonResult("getSessionFailed!");
         }
-        user.setPassword(null);
-        return new CommonResult(true, CommonResult.STATUS_SUCCESS,"获取用户信息成功!", user);
+        user.setPassword(CLIENT_SECRET);
+        return new CommonResult(true, STATUS_SUCCESS,"获取用户信息成功!", user);
     }
 }

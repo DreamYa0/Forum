@@ -3,6 +3,8 @@ package com.zbj.forum.mapper;
 import com.zbj.forum.entity.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by DreamYao on 2017/1/24.
  */
@@ -23,16 +25,10 @@ public interface UserMapper extends BaseMapper<User> {
     User getUserByUserName(String userName);
 
     /**
-     * 根据用户名锁定用户
-     * @param userName
+     * 查询所有用户信息
+     * @return
      */
-    void lockUser(String userName);
-
-    /**
-     * 根据用户名解锁用户
-     * @param
-     */
-    void unlockUser(String username);
+    List<User> getAllUsers();
 
     /**
      * 用户登录

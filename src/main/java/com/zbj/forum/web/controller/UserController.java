@@ -3,6 +3,7 @@ package com.zbj.forum.web.controller;
 import com.zbj.forum.entity.User;
 import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.service.IUserService;
+import com.zbj.forum.web.common.CommonConstant;
 import com.zbj.forum.web.common.CommonResult;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.zbj.forum.utils.CheckDataUtil.updateUserCheck;
+import static com.zbj.forum.web.common.CommonConstant.CLIENT_SECRET;
+import static com.zbj.forum.web.common.CommonConstant.MANAGE_USER;
+import static com.zbj.forum.web.common.CommonResult.STATUS_SUCCESS;
+import static com.zbj.forum.web.common.CommonResult.USER_USERPWD_EMPTY;
 
 /**
  * Created by DreamYao on 2017/1/24.
@@ -40,7 +48,7 @@ public class UserController {
             String password = jsonObject.get("password").toString();
             try {
                 if (jsonObject == null || userName == null || userName.equals("") || password == null || password.equals("")) {
-                    return new CommonResult(false, CommonResult.USER_USERPWD_EMPTY, "用户或密码为空");
+                    return new CommonResult(false, USER_USERPWD_EMPTY, "用户或密码为空");
                 }
                 User queryUser = userService.getUserByUserName(userName);
                 if (queryUser != null || queryUser.getUserName() != null) {
@@ -58,7 +66,7 @@ public class UserController {
             e.printStackTrace();
             return new CommonResult("参数错误!");
         }
-        return new CommonResult(CommonResult.STATUS_SUCCESS, "用户注册成功");
+        return new CommonResult(STATUS_SUCCESS, "用户注册成功");
     }
 
     /**
@@ -97,7 +105,7 @@ public class UserController {
             e.printStackTrace();
             return new CommonResult("getSessionFailed!");
         }
-        return new CommonResult(CommonResult.STATUS_SUCCESS, "删除用户成功!");
+        return new CommonResult(STATUS_SUCCESS, "删除用户成功!");
     }
 
     /**
@@ -110,7 +118,7 @@ public class UserController {
     public CommonResult updateUser(@RequestBody User user, HttpSession session) {
         try {
             User loginUser = (User) session.getAttribute("userInSession");
-            if (loginUser.getUserType() != 2) {
+            if (loginUser.getUserType() != MANAGE_USER) {
                 return new CommonResult("当前用户没有更新用户权限!");
             }
         } catch (Exception e) {
@@ -130,5 +138,38 @@ public class UserController {
             return new CommonResult("系统错误!");
         }
         return new CommonResult(true, CommonResult.getStatusSuccess(), "用户更新成功!");
+    }
+
+    /**
+     * 查询所有用户信息
+     * 分页功能待实现
+     * @param
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
+    public CommonResult getAllUsers(HttpSession session){
+        try {
+            User loginUser = (User) session.getAttribute("userInSession");
+            if (loginUser.getUserType() != MANAGE_USER) {
+                return new CommonResult("当前用户没有获取所有用户信息权限!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommonResult("请先登录!");
+        }
+        List<User> users;
+        try {
+            users = userService.getAllUsers();
+            for (User user : users) {
+                user.setPassword(CLIENT_SECRET);
+            }
+        } catch (CRUDException e) {
+            e.printStackTrace();
+            return new CommonResult("数据库中没有用户!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommonResult("服务异常!");
+        }
+        return new CommonResult(users);
     }
 }

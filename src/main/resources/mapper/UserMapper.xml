@@ -90,4 +90,9 @@
         SET credit=#{credit},last_visit=#{lastVisit}
         WHERE user_name=#{userName}
     </update>
+
+    <!--查询所有用户信息-->
+    <select id="getAllUsers" resultMap="UserResultMap">
+        SELECT * FROM t_user
+    </select>
 </mapper>

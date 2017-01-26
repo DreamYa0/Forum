@@ -103,24 +103,18 @@ public class UserServiceImpl implements IUserService {
     }
 
     /**
-     * 根据用户名查询用户信息
-     *
-     * @param userName
-     * @return
-     */
-    @Override
-    public List<User> queryUserByUserName(String userName) {
-        return null;
-    }
-
-    /**
      * 查询所有用户信息
      *
      * @return
      */
     @Override
-    public List<User> getAllUsers() {
-        return null;
+    public List<User> getAllUsers() throws Exception{
+        List<User> userList=userMapper.getAllUsers();
+        if (userList != null || userList.size() > 0) {
+            return userList;
+        } else {
+            throw new CRUDException(CRUDException.FIND_EXCEPTION, "数据库中没有用户!");
+        }
     }
 
     /**

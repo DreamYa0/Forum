@@ -20,11 +20,11 @@ public class CommonConstant implements Serializable {
     /**
      * 普通用户
      */
-    public static final Integer SCHOOL_USER = 1;
+    public static final Integer ORDINARY_USER = 1;
     /**
      * 管理员
      */
-    public static final Integer COLLEGE_USER = 2;
+    public static final Integer MANAGE_USER = 2;
     /**
      * session里的用户KEY
      */
