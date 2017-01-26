@@ -77,6 +77,13 @@ public class CommonResult {
         this.message = message;
     }
 
+    public CommonResult(boolean status, Integer code, String message) {
+        this.status = status;
+        this.code = code;
+        this.data = null;
+        this.message = message;
+    }
+
     /**
      * 失败,不返回数据,返回错误码
      *
@@ -101,6 +108,20 @@ public class CommonResult {
 
     public CommonResult() {
 
+    }
+
+    public CommonResult(String message) {
+        this.status = false;
+        this.code = CommonResult.STATUS_ERROR;
+        this.message = message;
+        this.data = null;
+    }
+
+    public CommonResult(Integer code,String message) {
+        this.status = true;
+        this.code = code;
+        this.message = message;
+        this.data = null;
     }
 
     @Override

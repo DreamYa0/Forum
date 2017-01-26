@@ -28,7 +28,7 @@
 
     <!--根据用户信息更新用户-->
     <update id="update" parameterType="User">
-        UPDATE t_user set password=#{password},user_type=#{userType},
+        UPDATE t_user set user_type=#{userType},
         locked=#{locked},credit=#{credit},last_visit=#{lastVisit},last_ip=#{lastIp} WHERE user_name=#{userName}
     </update>
 

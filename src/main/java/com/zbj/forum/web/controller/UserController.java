@@ -37,11 +37,11 @@ public class UserController {
             String password = jsonObject.get("password").toString();
             try {
                 if (jsonObject == null || userName == null || userName.equals("") || password == null || password.equals("")) {
-                    return new CommonResult(false, CommonResult.USER_USERPWD_EMPTY, "用户或密码为空", null);
+                    return new CommonResult(false, CommonResult.USER_USERPWD_EMPTY, "用户或密码为空");
                 }
                 User queryUser = userService.getUserByUserName(userName);
                 if (queryUser != null || queryUser.getUserName() != null) {
-                    return new CommonResult(false, CommonResult.STATUS_FAILURE, "用户名已存在", null);
+                    return new CommonResult("用户名已存在");
                 }
 
             } catch (Exception e) {
@@ -53,9 +53,9 @@ public class UserController {
             userService.save(user);
         } catch (Exception e) {
             e.printStackTrace();
-            return new CommonResult(false, CommonResult.getStatusError(), "参数错误!", null);
+            return new CommonResult("参数错误!");
         }
-        return new CommonResult(true, CommonResult.STATUS_SUCCESS, "用户注册成功",null);
+        return new CommonResult(CommonResult.STATUS_SUCCESS, "用户注册成功");
     }
 
     /**
@@ -72,11 +72,11 @@ public class UserController {
             User user = (User) session.getAttribute("userInSession");
             loginUserId=user.getId();
             if (user == null) {
-                return new CommonResult(false, CommonResult.NO_PERMISSION, "当前用户没有登录!", null);
+                return new CommonResult("当前用户没有登录!");
             }
             Integer userType = user.getUserType();
             if (userType != 2) {
-                return new CommonResult(false, CommonResult.getStatusError(), "此登录的用户没有删除用户权限", null);
+                return new CommonResult("此登录的用户没有删除用户权限");
             }
             JSONObject jsonObject = new JSONObject(param);
             String userName = jsonObject.get("userName").toString();
@@ -84,17 +84,17 @@ public class UserController {
                 User queryUser = userService.getUserByUserName(userName);
                 deleteUserId=queryUser.getId();
                 if (loginUserId == deleteUserId) {
-                    return new CommonResult(false,CommonResult.STATUS_ERROR, "用户不能删除自己!", null);
+                    return new CommonResult("用户不能删除自己!");
                 }
                 userService.delete(deleteUserId);
             } catch (NullPointerException e) {
-                return new CommonResult(false,CommonResult.getStatusError(),"删除的用户不存在!",null);
+                return new CommonResult("删除的用户不存在!");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new CommonResult(false,CommonResult.getStatusError(),"getSessionFailed!",null);
+            return new CommonResult("getSessionFailed!");
         }
-        return new CommonResult(true, CommonResult.STATUS_SUCCESS, "删除用户成功!", null);
+        return new CommonResult(CommonResult.STATUS_SUCCESS, "删除用户成功!");
     }
 
     /**
@@ -105,6 +105,18 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public CommonResult updateUser(User user,HttpSession session){
+        try {
+            User loginUser = (User) session.getAttribute("userInSession");
+            if (loginUser.getUserType() != 2) {
+                return new CommonResult("当前用户没有更新用户权限!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommonResult("请先登录!");
+        }
+        if (user == null || user.getUserName() == null || user.getUserName().isEmpty()) {
+            return new CommonResult("参数错误!");
+        }
         return null;
     }
 }
