@@ -142,8 +142,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
-    public CommonResult getAllUsers(HttpSession session,HttpServletResponse response){
-        try {
+    public CommonResult getAllUsers(HttpServletResponse response){
+       /* try {
             User loginUser = (User) session.getAttribute("userInSession");
             if (loginUser.getUserType() != MANAGE_USER) {
                 response.sendError(response.SC_FORBIDDEN);
@@ -152,7 +152,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return new CommonResult("请先登录!");
-        }
+        }*/
         List<User> users;
         try {
             users = userService.getAllUsers();
