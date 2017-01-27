@@ -2,9 +2,11 @@ package com.zbj.forum.web.controller;
 
 import com.zbj.forum.entity.Board;
 import com.zbj.forum.exception.CRUDException;
+import com.zbj.forum.exception.ExceptionCode;
 import com.zbj.forum.service.IBoardService;
 import com.zbj.forum.utils.CheckDataUtil;
 import com.zbj.forum.web.common.CommonResult;
+import com.zbj.forum.web.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,21 +58,21 @@ public class BoardController {
      */
     @ResponseBody
     @RequestMapping(value = "/getBoardMessage",method = RequestMethod.POST)
-    public CommonResult getBoardMessage(String boardName){
+    public Result<Board> getBoardMessage(String boardName){
         if (boardName.equals("") && boardName.isEmpty()) {
-            return new CommonResult(PARAMETER_ERROR,"参数错误!");
+            return new Result(PARAMETER_ERROR,"参数错误!");
         }
         Board board;
         try {
             board = boardService.getBoardMassage(boardName);
             if (board == null) {
-                return new CommonResult("论坛板块信息不存在!");
+                return new Result(ExceptionCode.HAVE_NOT_DATA,"论坛板块信息不存在!");
             }
         }catch (Exception e) {
             e.printStackTrace();
-            return new CommonResult("系统服务异常!");
+            return new Result(ExceptionCode.SYSTEM_ERROR,"系统服务异常!");
         }
-        return new CommonResult(true, STATUS_SUCCESS, "获取论坛信息成功!", board);
+        return new Result<>(board);
     }
 
     /**
@@ -81,19 +83,21 @@ public class BoardController {
      */
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public CommonResult updateBoard(@RequestBody Board board) {
+    public Result<Boolean> updateBoard(@RequestBody Board board) {
+        Result<Boolean> result=null;
         if (!updateBoardCheck(board)) {
-            return new CommonResult(PARAMETER_ERROR,"参数错误!");
+            return new Result(PARAMETER_ERROR,"参数错误!");
         }
         try {
             boardService.update(board);
         } catch (CRUDException e) {
             e.printStackTrace();
-            return new CommonResult("论坛板块ID不存在，更新失败!");
+            return new Result(ExceptionCode.HAVE_NOT_DATA,"论坛板块ID不存在，更新失败!");
         } catch (Exception e) {
             e.printStackTrace();
-            return new CommonResult("系统服务异常!");
+            return new Result(ExceptionCode.SYSTEM_ERROR,"系统服务异常!");
         }
-        return new CommonResult(CommonResult.STATUS_SUCCESS,"论坛信息更新成功!");
+        result.setData(true);
+        return result;
     }
 }
