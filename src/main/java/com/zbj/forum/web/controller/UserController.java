@@ -4,7 +4,6 @@ import com.zbj.forum.entity.User;
 import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.service.IUserService;
 import com.zbj.forum.web.common.CommonResult;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -109,17 +108,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public CommonResult updateUser(@RequestBody User user, HttpSession session,HttpServletResponse response) {
-        try {
-            User loginUser = (User) session.getAttribute("userInSession");
-            if (loginUser.getUserType() != MANAGE_USER) {
-                response.sendError(response.SC_FORBIDDEN);
-                return new CommonResult("当前用户没有更新用户权限!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResult("请先登录!");
-        }
+    public CommonResult updateUser(@RequestBody User user) {
+
         if (!updateUserCheck(user)) {
             return new CommonResult("参数错误!");
         }
@@ -142,17 +132,8 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
-    public CommonResult getAllUsers(HttpServletResponse response){
-       /* try {
-            User loginUser = (User) session.getAttribute("userInSession");
-            if (loginUser.getUserType() != MANAGE_USER) {
-                response.sendError(response.SC_FORBIDDEN);
-                return new CommonResult("当前用户没有获取所有用户信息权限!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResult("请先登录!");
-        }*/
+    public CommonResult getAllUsers(){
+
         List<User> users;
         try {
             users = userService.getAllUsers();

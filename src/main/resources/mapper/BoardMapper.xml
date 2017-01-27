@@ -41,4 +41,27 @@
         INSERT INTO t_board (board_name,board_desc)
         VALUES (#{boardName},#{boardDesc})
     </insert>
+
+    <!--根据论坛版块ID获取论坛版块信息-->
+    <select id="get" parameterType="java.lang.Integer" resultMap="BoardResultMap">
+        SELECT
+        <include refid="Board_Column_List"/>
+        FROM t_board t
+        WHERE t.board_id=#{id}
+    </select>
+
+    <!--更新论坛信息-->
+    <update id="update" parameterType="Board">
+        UPDATE t_board SET
+        <if test="boardName !=null">
+            board_name=#{boardName},
+        </if>
+        <if test="boardDesc !=null">
+            board_desc=#{boardDesc},
+        </if>
+        <if test="id !=null">
+            board_id=#{id}
+        </if>
+        WHERE board_id=#{id}
+    </update>
 </mapper>

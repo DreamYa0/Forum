@@ -8,6 +8,7 @@ import com.zbj.forum.entity.User;
  */
 public class CheckDataUtil {
 
+    // 用户更新参数检查
     public static Boolean updateUserCheck(User user) {
         String userName = user.getUserName();
         Integer userType = user.getUserType();
@@ -38,12 +39,27 @@ public class CheckDataUtil {
         }
     }
 
+    // 论坛创建参数检查
     public static Boolean createBoardCheck(Board board) {
-        String boardName=board.getBoardName();
-        String boardDesc=board.getBoardDesc();
+        String boardName = board.getBoardName();
+        String boardDesc = board.getBoardDesc();
         if (board == null && boardName.equals("") && boardName == null
                 && boardName.isEmpty() && boardDesc.equals("")
                 && boardDesc.isEmpty() && boardDesc == null) {
+            return false;
+        }
+        return true;
+    }
+
+    // 论坛更新参数检查
+    public static Boolean updateBoardCheck(Board board) {
+        String boardName = board.getBoardName();
+        String boardDesc = board.getBoardDesc();
+        Integer id = board.getId();
+        if (board == null && (boardName.equals("") && boardName == null
+                && boardName.isEmpty()) || (boardDesc.equals("")
+                && boardDesc.isEmpty() && boardDesc == null)
+                && id == null && id > 0) {
             return false;
         }
         return true;

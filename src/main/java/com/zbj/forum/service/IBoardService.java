@@ -1,6 +1,7 @@
 package com.zbj.forum.service;
 
 import com.zbj.forum.entity.Board;
+import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.mapper.BaseMapper;
 
 /**
@@ -15,9 +16,18 @@ public interface IBoardService extends BaseMapper<Board> {
     void createBoard(Board board) throws Exception;
 
     /**
-     * 根据论坛板块名回去论坛信息
+     * 根据论坛板块名获取论坛信息
      * @param boardName
      * @return
      */
     Board getBoardMassage(String boardName) throws Exception;
+
+    /**
+     * 根据论坛板块ID获取论坛信息
+     *
+     * @param id
+     * @return
+     */
+    Board getMessageById(Integer id) throws CRUDException;
+
 }

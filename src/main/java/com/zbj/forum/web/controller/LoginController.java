@@ -15,8 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import static com.zbj.forum.web.common.CommonConstant.CLIENT_SECRET;
 import static com.zbj.forum.web.common.CommonConstant.USER_IN_SESSION;
-import static com.zbj.forum.web.common.CommonResult.STATUS_SUCCESS;
-import static com.zbj.forum.web.common.CommonResult.getStatusError;
+import static com.zbj.forum.web.common.CommonResult.*;
 
 /**
  * Created by DreamYao on 2017/1/24.
@@ -46,7 +45,7 @@ public class LoginController {
                     if (u != null) {
                         session.setAttribute(USER_IN_SESSION, u);
                     } else {
-                        return new CommonResult("密码错误!");
+                        return new CommonResult(false,USER_USERLOGIN_ERROR,"密码错误!");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -60,7 +59,7 @@ public class LoginController {
             e.printStackTrace();
             return new CommonResult("系统异常!");
         }
-        return new CommonResult(true, STATUS_SUCCESS,"登录成功!");
+        return new CommonResult(USER_USERLOGIN_SUCCESS,"登录成功!");
     }
 
     /**

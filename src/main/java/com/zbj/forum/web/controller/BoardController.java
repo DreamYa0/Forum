@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static com.zbj.forum.utils.CheckDataUtil.updateBoardCheck;
+import static com.zbj.forum.web.common.CommonResult.PARAMETER_ERROR;
 import static com.zbj.forum.web.common.CommonResult.STATUS_SUCCESS;
 
 /**
@@ -56,7 +58,7 @@ public class BoardController {
     @RequestMapping(value = "/getBoardMessage",method = RequestMethod.POST)
     public CommonResult getBoardMessage(String boardName){
         if (boardName.equals("") && boardName.isEmpty()) {
-            return new CommonResult("参数错误!");
+            return new CommonResult(PARAMETER_ERROR,"参数错误!");
         }
         Board board;
         try {
@@ -69,5 +71,29 @@ public class BoardController {
             return new CommonResult("系统服务异常!");
         }
         return new CommonResult(true, STATUS_SUCCESS, "获取论坛信息成功!", board);
+    }
+
+    /**
+     * 论坛信息更新
+     *
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public CommonResult updateBoard(@RequestBody Board board) {
+        if (!updateBoardCheck(board)) {
+            return new CommonResult(PARAMETER_ERROR,"参数错误!");
+        }
+        try {
+            boardService.update(board);
+        } catch (CRUDException e) {
+            e.printStackTrace();
+            return new CommonResult("论坛板块ID不存在，更新失败!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new CommonResult("系统服务异常!");
+        }
+        return new CommonResult(CommonResult.STATUS_SUCCESS,"论坛信息更新成功!");
     }
 }

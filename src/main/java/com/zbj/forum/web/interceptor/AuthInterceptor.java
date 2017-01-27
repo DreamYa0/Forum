@@ -21,7 +21,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     private static final String INDEX_PATH = "/index";
     private static final String REGISTER_PATH = "/user/save";
 
-    private static final List<String> SCIENTIFIC_PATH = new ArrayList<>();
+    private static final List<String> PERMISSIONS_PATH = new ArrayList<>();
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
 
@@ -40,7 +40,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                 // 拦截路由地址
             }
             addPermissionsPath();
-            if (SCIENTIFIC_PATH.contains(requestURI)) {
+            if (PERMISSIONS_PATH.contains(requestURI)) {
                 // 权限拦截,只有管理员才能访问下面的路由
                 if (user.getUserType() != MANAGE_USER) {
                     response.sendError(response.SC_UNAUTHORIZED, "登录的用户没有此权限!");
@@ -51,10 +51,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     }
     // 权限拦截路由地址
     private static void addPermissionsPath() {
-        SCIENTIFIC_PATH.add("/user/save");
-        SCIENTIFIC_PATH.add("/user/delete");
-        SCIENTIFIC_PATH.add("/user/getAllUsers");
-        SCIENTIFIC_PATH.add("/board/createBoard");
-        SCIENTIFIC_PATH.add("/board/getBoardMessage");
+        PERMISSIONS_PATH.add("/user/save");
+        PERMISSIONS_PATH.add("/user/delete");
+        PERMISSIONS_PATH.add("/user/update");
+        PERMISSIONS_PATH.add("/user/getAllUsers");
+        PERMISSIONS_PATH.add("/board/createBoard");
+        PERMISSIONS_PATH.add("/board/getBoardMessage");
     }
 }
