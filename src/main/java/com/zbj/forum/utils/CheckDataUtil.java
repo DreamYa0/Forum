@@ -1,5 +1,6 @@
 package com.zbj.forum.utils;
 
+import com.zbj.forum.entity.Board;
 import com.zbj.forum.entity.User;
 
 /**
@@ -35,5 +36,16 @@ public class CheckDataUtil {
         } else {
             return true;
         }
+    }
+
+    public static Boolean createBoardCheck(Board board) {
+        String boardName=board.getBoardName();
+        String boardDesc=board.getBoardDesc();
+        if (board == null && boardName.equals("") && boardName == null
+                && boardName.isEmpty() && boardDesc.equals("")
+                && boardDesc.isEmpty() && boardDesc == null) {
+            return false;
+        }
+        return true;
     }
 }

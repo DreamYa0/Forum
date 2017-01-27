@@ -1,0 +1,23 @@
+package com.zbj.forum.service;
+
+import com.zbj.forum.entity.Board;
+import com.zbj.forum.mapper.BaseMapper;
+
+/**
+ * Created by dreamyao on 2017/1/27.
+ */
+public interface IBoardService extends BaseMapper<Board> {
+
+    /**
+     * 创建论坛板块
+     * @param board
+     */
+    void createBoard(Board board) throws Exception;
+
+    /**
+     * 根据论坛板块名回去论坛信息
+     * @param boardName
+     * @return
+     */
+    Board getBoardMassage(String boardName) throws Exception;
+}

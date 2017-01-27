@@ -5,18 +5,17 @@
 
     <!-- 字段映射 -->
     <resultMap id="BoardResultMap" type="com.zbj.forum.entity.Board">
-        <id column="id" property="id" jdbcType="NUMERIC"/>
-        <result column="board_id" jdbcType="NUMERIC" property="boardId"/>
+        <id column="board_id" property="id" jdbcType="NUMERIC"/>
         <result column="board_name" jdbcType="VARCHAR" property="boardName"/>
         <result column="board_desc" jdbcType="VARCHAR" property="boardDesc"/>
-        <result column="board_num" jdbcType="NUMERIC" property="boardNum"/>
+        <result column="topic_num" jdbcType="NUMERIC" property="topicNum"/>
     </resultMap>
     <!-- 所有字段 -->
     <sql id="Board_Column_List">
-        board_id
+         board_id
         ,board_name
-        ,obj_board_descid
-        ,board_num
+        ,board_desc
+        ,topic_num
     </sql>
 
     <!-- 查询全部 -->
@@ -29,12 +28,17 @@
         select count(id) from t_board
     </select>
 
-    <!--根据论坛版块ID获取论坛版块信息-->
-    <select id="getBoardMassage" parameterType="Integer" resultMap="BoardResultMap">
+    <!--根据论坛版块名获取论坛版块信息-->
+    <select id="getBoardMassage" parameterType="java.lang.String" resultMap="BoardResultMap">
         SELECT
         <include refid="Board_Column_List"/>
         from t_board t
-        WHERE t.id=#{id}
+        WHERE t.board_name=#{boardName}
     </select>
 
+    <!-- 新建论坛板块 -->
+    <insert id="createBoard" parameterType="Board">
+        INSERT INTO t_board (board_name,board_desc)
+        VALUES (#{boardName},#{boardDesc})
+    </insert>
 </mapper>

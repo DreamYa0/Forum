@@ -10,7 +10,13 @@ import org.springframework.stereotype.Repository;
 public interface BoardMapper extends BaseMapper<Board> {
 
     /**
-     * 根据论坛版块ID获取论坛版块信息
+     * 根据论坛版块名获取论坛版块信息
      */
-    Board getBoardMassage(Integer id);
+    Board getBoardMassage(String boardName);
+
+    /**
+     * 新建论坛
+     * @param board
+     */
+    void createBoard(Board board);
 }
