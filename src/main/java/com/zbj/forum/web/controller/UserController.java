@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public CommonResult deleteUser(@RequestBody User user, HttpSession session) {
+    public CommonResult deleteUser(@RequestBody User user, HttpSession session,HttpServletResponse response) {
         Integer loginUserId;
         Integer deleteUserId;
         try {
@@ -79,6 +80,7 @@ public class UserController {
             }
             Integer userType = loginUser.getUserType();
             if (userType != MANAGE_USER) {
+                response.sendError(response.SC_FORBIDDEN);
                 return new CommonResult("此登录的用户没有删除用户权限");
             }
             String userName = user.getUserName();
@@ -86,6 +88,7 @@ public class UserController {
                 User queryUser = userService.getUserByUserName(userName);
                 deleteUserId = queryUser.getId();
                 if (loginUserId == deleteUserId) {
+                    response.sendError(response.SC_FORBIDDEN);
                     return new CommonResult("用户不能删除自己!");
                 }
                 userService.delete(deleteUserId);
@@ -106,10 +109,11 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public CommonResult updateUser(@RequestBody User user, HttpSession session) {
+    public CommonResult updateUser(@RequestBody User user, HttpSession session,HttpServletResponse response) {
         try {
             User loginUser = (User) session.getAttribute("userInSession");
             if (loginUser.getUserType() != MANAGE_USER) {
+                response.sendError(response.SC_FORBIDDEN);
                 return new CommonResult("当前用户没有更新用户权限!");
             }
         } catch (Exception e) {
@@ -138,10 +142,11 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
-    public CommonResult getAllUsers(HttpSession session){
+    public CommonResult getAllUsers(HttpSession session,HttpServletResponse response){
         try {
             User loginUser = (User) session.getAttribute("userInSession");
             if (loginUser.getUserType() != MANAGE_USER) {
+                response.sendError(response.SC_FORBIDDEN);
                 return new CommonResult("当前用户没有获取所有用户信息权限!");
             }
         } catch (Exception e) {
