@@ -135,6 +135,7 @@ public class UserServiceImpl implements IUserService {
             /*更新访问时间*/
             u.setLastVisit(new Date());
             userMapper.updateCredit(u);
+            // TODO 写入登录日志
             queryUser = userMapper.getUserByUserName(user.getUserName());
         }
         return queryUser;
