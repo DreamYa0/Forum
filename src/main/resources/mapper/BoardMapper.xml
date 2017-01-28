@@ -52,7 +52,8 @@
 
     <!--更新论坛信息-->
     <update id="update" parameterType="Board">
-        UPDATE t_board SET
+        UPDATE t_board
+        SET
         <if test="boardName !=null">
             board_name=#{boardName},
         </if>

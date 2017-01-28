@@ -78,21 +78,6 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <!--配置切面 -->
-    <aop:config>
-        <aop:advisor advice-ref="advice"
-                     pointcut="execution(* com.zbj.forum.service..*.*(..))"/>
-    </aop:config>
-    <!--配置通知-使Service层方法支持事务功能 -->
-    <tx:advice id="advice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="query*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="*"/>
-        </tx:attributes>
-    </tx:advice>
-
     <!--aop注解配置-->
     <aop:aspectj-autoproxy/>
 

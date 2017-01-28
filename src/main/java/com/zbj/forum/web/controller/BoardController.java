@@ -62,16 +62,8 @@ public class BoardController {
         if (boardName.equals("") && boardName.isEmpty()) {
             return new Result(PARAMETER_ERROR,"参数错误!");
         }
-        Board board;
-        try {
-            board = boardService.getBoardMassage(boardName);
-            if (board == null) {
-                return new Result(ExceptionCode.HAVE_NOT_DATA,"论坛板块信息不存在!");
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-            return new Result(ExceptionCode.SYSTEM_ERROR,"系统服务异常!");
-        }
+        Board board = boardService.getBoardMassage(boardName);
+
         return new Result<>(board);
     }
 
@@ -86,16 +78,22 @@ public class BoardController {
     public Result<Boolean> updateBoard(@RequestBody Board board) {
         Result<Boolean> result=null;
         if (!updateBoardCheck(board)) {
-            return new Result(PARAMETER_ERROR,"参数错误!");
+            result.setErrorCode(PARAMETER_ERROR);
+            result.setErrorMsg("参数错误!");
+            return result;
         }
         try {
             boardService.update(board);
         } catch (CRUDException e) {
             e.printStackTrace();
-            return new Result(ExceptionCode.HAVE_NOT_DATA,"论坛板块ID不存在，更新失败!");
+            result.setErrorCode(ExceptionCode.HAVE_NOT_DATA);
+            result.setErrorMsg("论坛板块ID不存在，更新失败!!");
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(ExceptionCode.SYSTEM_ERROR,"系统服务异常!");
+            result.setErrorCode(ExceptionCode.SYSTEM_ERROR);
+            result.setErrorMsg("系统服务异常!");
+            return result;
         }
         result.setData(true);
         return result;

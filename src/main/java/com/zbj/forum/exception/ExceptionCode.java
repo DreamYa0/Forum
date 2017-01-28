@@ -36,4 +36,9 @@ public final class ExceptionCode {
      * 无对应的数据
      */
     public static final int HAVE_NOT_DATA = 11006;
+
+    /**
+     * 存在重复数据repeat
+     */
+    public static final int HAVE_REPEAT_DATA = 11007;
 }

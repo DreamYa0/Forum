@@ -15,7 +15,7 @@ public class Result<T extends Serializable> implements Serializable {
     /**
      * 成功标识.
      */
-    private static final int OK = 10000;
+    private static final Integer OK = 10000;
 
     /**
      * 错误码.
@@ -31,7 +31,7 @@ public class Result<T extends Serializable> implements Serializable {
      * 50001：订单查询失败
      * 50002：SQL异常.
      */
-    private int errorCode;
+    private Integer errorCode;
 
     /**
      * 错误描述信息. 简单描述服务具体错误的原因.
@@ -59,12 +59,12 @@ public class Result<T extends Serializable> implements Serializable {
         this.data = data;
     }
 
-    public Result(int errorCode, String errorMsg) {
+    public Result(Integer errorCode, String errorMsg) {
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }
 
-    public int getErrorCode() {
+    public Integer getErrorCode(Integer code) {
         return errorCode;
     }
 
@@ -78,7 +78,7 @@ public class Result<T extends Serializable> implements Serializable {
         return errorCode == OK;
     }
 
-    public Result<T> setErrorCode(final int errorCode) {
+    public Result<T> setErrorCode(final Integer errorCode) {
         this.errorCode = errorCode;
         return this;
     }

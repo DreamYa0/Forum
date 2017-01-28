@@ -20,7 +20,7 @@ public interface IBoardService extends BaseMapper<Board> {
      * @param boardName
      * @return
      */
-    Board getBoardMassage(String boardName) throws Exception;
+    Board getBoardMassage(String boardName);
 
     /**
      * 根据论坛板块ID获取论坛信息

@@ -2,7 +2,7 @@ package com.zbj.forum.service.impl;
 
 import com.zbj.forum.entity.Board;
 import com.zbj.forum.exception.CRUDException;
-import com.zbj.forum.exception.ErrorCode;
+import com.zbj.forum.exception.ExceptionCode;
 import com.zbj.forum.mapper.BoardMapper;
 import com.zbj.forum.query.BaseQuery;
 import com.zbj.forum.service.IBoardService;
@@ -31,7 +31,7 @@ public class BoardServiceImpl implements IBoardService {
         String boardName=board.getBoardName();
         Board queryBoard = this.getBoardMassage(boardName);
         if (queryBoard != null) {
-            throw new CRUDException(ErrorCode.FIND_FAILED, "有相同的论坛板块名存在!");
+            throw new CRUDException(ExceptionCode.HAVE_REPEAT_DATA, "有相同的论坛板块名存在!");
         }
         boardMapper.createBoard(board);
     }
@@ -43,8 +43,11 @@ public class BoardServiceImpl implements IBoardService {
      * @return
      */
     @Override
-    public Board getBoardMassage(String boardName) throws Exception{
+    public Board getBoardMassage(String boardName){
         Board board = boardMapper.getBoardMassage(boardName);
+        if (board == null) {
+            throw new CRUDException(ExceptionCode.HAVE_NOT_DATA, "无对应的数据!");
+        }
         return board;
     }
 
@@ -58,7 +61,7 @@ public class BoardServiceImpl implements IBoardService {
     public Board getMessageById(Integer id) throws CRUDException {
         Board board = boardMapper.get(id);
         if (board == null) {
-            throw new CRUDException(ErrorCode.NO_DATA,"无对应数据!");
+            throw new CRUDException(ExceptionCode.HAVE_NOT_DATA,"无对应数据!");
         }
         return board;
     }
@@ -98,7 +101,7 @@ public class BoardServiceImpl implements IBoardService {
             boardMapper.update(queryBoard);
         } catch (CRUDException e) {
             e.printStackTrace();
-            throw new CRUDException(ErrorCode.UPDATE_FAILED, "论坛板块ID不存在，更新失败!");
+            throw new CRUDException(ExceptionCode.HAVE_NOT_DATA, "论坛板块ID不存在，更新失败!");
         }
     }
 

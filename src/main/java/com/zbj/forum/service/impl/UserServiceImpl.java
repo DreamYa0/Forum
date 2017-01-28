@@ -2,6 +2,7 @@ package com.zbj.forum.service.impl;
 
 import com.zbj.forum.entity.User;
 import com.zbj.forum.exception.CRUDException;
+import com.zbj.forum.exception.ExceptionCode;
 import com.zbj.forum.mapper.LoginLogMapper;
 import com.zbj.forum.mapper.UserMapper;
 import com.zbj.forum.query.BaseQuery;
@@ -12,8 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-
-import static com.zbj.forum.exception.CRUDException.FIND_EXCEPTION;
 
 /**
  * Created by DreamYao on 2017/1/24.
@@ -87,7 +86,7 @@ public class UserServiceImpl implements IUserService {
         String userName = user.getUserName();
         User queryUser = userMapper.getUserByUserName(userName);
         if (queryUser == null) {
-            throw new CRUDException(CRUDException.UPDATE_EXCEPTION, "更新的用户不存在");
+            throw new CRUDException(ExceptionCode.HAVE_NOT_DATA, "更新的用户不存在");
         }
         userMapper.update(user);
     }
@@ -102,7 +101,7 @@ public class UserServiceImpl implements IUserService {
     public User getUserByUserName(String userName) throws Exception{
         User user = userMapper.getUserByUserName(userName);
         if (user == null) {
-            throw new CRUDException(FIND_EXCEPTION,"用户名不存在");
+            throw new CRUDException(ExceptionCode.HAVE_NOT_DATA,"用户名不存在");
         }
         return user;
     }
@@ -118,7 +117,7 @@ public class UserServiceImpl implements IUserService {
         if (userList != null || userList.size() > 0) {
             return userList;
         } else {
-            throw new CRUDException(FIND_EXCEPTION, "数据库中没有用户!");
+            throw new CRUDException(ExceptionCode.HAVE_NOT_DATA, "数据库中没有用户!");
         }
     }
 
