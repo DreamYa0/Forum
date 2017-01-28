@@ -73,7 +73,7 @@
 
         <!--把ExceptionHandler Bean声明为切面-->
         <aop:aspect ref="ExceptionHandler">
-            <!--配置切点 -->
+            <!--定义切点 -->
             <aop:pointcut id="ExceptionHandlerMethod" expression="execution(* com.zbj.forum.web.controller..*.*(..))"/>
             <!--配置环绕通知，环绕通知为最强大的通知具备有前置通知、后置通知、异常通知的所有功能 -->
             <aop:around pointcut-ref="ExceptionHandlerMethod" method="ExceptionHandling"/>

@@ -35,7 +35,7 @@ public class LoginController {
      */
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object loginPost(@RequestBody User user, HttpSession session) {
+    public CommonResult loginPost(@RequestBody User user, HttpSession session) {
         String userName = user.getUserName();
         try {
             User queryUser = userService.getUserByUserName(userName);
