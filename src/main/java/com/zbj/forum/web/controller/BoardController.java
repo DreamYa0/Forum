@@ -73,7 +73,6 @@ public class BoardController {
             return result;
         }
         boardService.update(board);
-        result.setData(true);
-        return result;
+        return new Result<>(true);
     }
 }

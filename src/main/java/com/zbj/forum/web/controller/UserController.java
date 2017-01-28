@@ -4,6 +4,7 @@ import com.zbj.forum.entity.User;
 import com.zbj.forum.service.IUserService;
 import com.zbj.forum.utils.UserContext;
 import com.zbj.forum.web.common.CommonResult;
+import com.zbj.forum.web.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,27 +36,14 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public CommonResult save(@RequestBody User user) {
-        try {
-            String userName = user.getUserName();
-            String password = user.getPassword();
-            try {
-                if (user == null || userName == null || userName.equals("") || password == null || password.equals("")) {
-                    return new CommonResult(false, USER_USERPWD_EMPTY, "用户或密码为空");
-                }
-                User queryUser = userService.getUserByUserName(userName);
-                if (queryUser != null || queryUser.getUserName() != null) {
-                    return new CommonResult("用户名已存在");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            userService.save(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResult("参数错误!");
+    public Result<Boolean> save(@RequestBody User user) {
+        String userName = user.getUserName();
+        String password = user.getPassword();
+        if (user == null || ((userName == null || userName.equals("")) || (password == null || password.equals("")))) {
+            return new Result<>(USER_USERPWD_EMPTY, "用户或密码为空");
         }
-        return new CommonResult(STATUS_SUCCESS, "用户注册成功");
+        userService.save(user);
+        return new Result<>();
     }
 
     /**
@@ -65,7 +53,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public CommonResult deleteUser(@RequestBody User user) {
+    public Object deleteUser(@RequestBody User user) {
 
         // 从用户上下文中获取登录的用户
         User loginUser = UserContext.getLoginUser();
@@ -87,7 +75,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public CommonResult updateUser(@RequestBody User user) {
+    public Object updateUser(@RequestBody User user) {
 
         if (!updateUserCheck(user)) {
             return new CommonResult("参数错误!");
@@ -103,7 +91,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/getAllUsers", method = RequestMethod.GET)
-    public CommonResult getAllUsers(){
+    public Object getAllUsers(){
 
         List<User> users;
         users = userService.getAllUsers();

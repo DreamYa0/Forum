@@ -33,9 +33,17 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public void save(User user) {
+        User queryUser=null;
+        try {
+            queryUser = userMapper.getUserByUserName(user.getUserName());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        if (queryUser != null) {
+            throw new CRUDException(ExceptionCode.DATA_CONVERT_ERROR, "此用户名已被注册!");
+        }
         user.setLastVisit(new Date());
         userMapper.register(user);
-
     }
 
     /**

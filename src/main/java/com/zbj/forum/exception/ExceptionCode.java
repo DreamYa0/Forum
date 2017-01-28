@@ -4,6 +4,11 @@ package com.zbj.forum.exception;
  * Created by dreamyao on 2017/1/27.
  */
 public final class ExceptionCode {
+
+    /**
+     * 系统错误
+     */
+    public static final int SYSTEM_SUCCESS = 10000;
     /**
      * 系统错误
      */
