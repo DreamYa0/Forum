@@ -211,6 +211,12 @@
             <version>20131018</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.7</version>
+        </dependency>
+
         <!-- java版本的scrypt加密算法用于用户密码加密 -->
         <dependency>
             <groupId>com.lambdaworks</groupId>
