@@ -62,6 +62,9 @@
     <!--声明异常处理类的Bean -->
     <bean id="ExceptionHandler" class="com.zbj.forum.web.interceptor.ControllerExceptionHandler"/>
 
+    <!--声明日志记录类的Bean -->
+    <bean id="LogHandler" class="com.zbj.forum.web.interceptor.LogHandler"/>
+
     <!--aop注解配置-->
     <aop:aspectj-autoproxy/>
 
@@ -77,6 +80,17 @@
             <aop:pointcut id="ExceptionHandlerMethod" expression="execution(* com.zbj.forum.web.controller..*.*(..))"/>
             <!--配置环绕通知，环绕通知为最强大的通知具备有前置通知、后置通知、异常通知的所有功能 -->
             <aop:around pointcut-ref="ExceptionHandlerMethod" method="ExceptionHandling"/>
+        </aop:aspect>
+
+        <!--把LogHandler Bean声明为切面-->
+        <aop:aspect ref="LogHandler">
+            <!--定义切点 -->
+            <aop:pointcut id="LogHandlerMethod" expression="execution(* com.zbj.forum..*.*(..))"/>
+            <!--配置前置通知-->
+            <aop:before method="log" pointcut-ref="LogHandlerMethod"/>
+            <!--配置后置通知-->
+            <aop:after method="logArg" pointcut-ref="LogHandlerMethod"/>
+            <aop:after-returning method="logArgAndReturn" returning="returnObj" pointcut-ref="LogHandlerMethod"/>
         </aop:aspect>
     </aop:config>
 
