@@ -29,7 +29,7 @@ public interface BaseMapper<T> {
      *
      * @param
      */
-    void update(T t) throws Exception;
+    void update(T t);
 
     /**
      * 根据id来查找

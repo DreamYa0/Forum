@@ -27,7 +27,7 @@ public class BoardServiceImpl implements IBoardService {
      * @param board
      */
     @Override
-    public void createBoard(Board board) throws Exception{
+    public void createBoard(Board board) {
         String boardName=board.getBoardName();
         Board queryBoard = this.getBoardMassage(boardName);
         if (queryBoard != null) {
@@ -92,7 +92,7 @@ public class BoardServiceImpl implements IBoardService {
      * @param board
      */
     @Override
-    public void update(Board board) throws Exception{
+    public void update(Board board) {
         Integer id=board.getId();
         try {
             Board queryBoard = this.getMessageById(id);

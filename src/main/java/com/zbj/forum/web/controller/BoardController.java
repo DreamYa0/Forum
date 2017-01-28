@@ -1,8 +1,6 @@
 package com.zbj.forum.web.controller;
 
 import com.zbj.forum.entity.Board;
-import com.zbj.forum.exception.CRUDException;
-import com.zbj.forum.exception.ExceptionCode;
 import com.zbj.forum.service.IBoardService;
 import com.zbj.forum.utils.CheckDataUtil;
 import com.zbj.forum.web.common.CommonResult;
@@ -39,15 +37,7 @@ public class BoardController {
         if (!CheckDataUtil.createBoardCheck(board)) {
             return new CommonResult("参数错误!");
         }
-        try {
-            boardService.createBoard(board);
-        } catch (CRUDException e) {
-            e.printStackTrace();
-            return new CommonResult("有相同的论坛板块名存在");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResult("系统服务异常");
-        }
+        boardService.createBoard(board);
         return new CommonResult(STATUS_SUCCESS, "论坛板块创建成功!");
     }
 
@@ -82,19 +72,7 @@ public class BoardController {
             result.setErrorMsg("参数错误!");
             return result;
         }
-        try {
-            boardService.update(board);
-        } catch (CRUDException e) {
-            e.printStackTrace();
-            result.setErrorCode(ExceptionCode.HAVE_NOT_DATA);
-            result.setErrorMsg("论坛板块ID不存在，更新失败!!");
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.setErrorCode(ExceptionCode.SYSTEM_ERROR);
-            result.setErrorMsg("系统服务异常!");
-            return result;
-        }
+        boardService.update(board);
         result.setData(true);
         return result;
     }

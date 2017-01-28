@@ -1,7 +1,6 @@
 package com.zbj.forum.service;
 
 import com.zbj.forum.entity.User;
-import com.zbj.forum.exception.CRUDException;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface IUserService extends IBaseService<User> {
      *
      * @param user
      */
-    void update(User user) throws Exception;
+    void update(User user);
 
     /**
      * 根据用户名获取用户信息
@@ -23,14 +22,14 @@ public interface IUserService extends IBaseService<User> {
      * @param userName
      * @return
      */
-    User getUserByUserName(String userName) throws Exception;
+    User getUserByUserName(String userName);
 
     /**
      * 查询所有用户信息
      *
      * @return
      */
-    List<User> getAllUsers() throws Exception;
+    List<User> getAllUsers();
 
     /**
      * 用户登录

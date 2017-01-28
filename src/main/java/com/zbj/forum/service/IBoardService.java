@@ -13,7 +13,7 @@ public interface IBoardService extends BaseMapper<Board> {
      * 创建论坛板块
      * @param board
      */
-    void createBoard(Board board) throws Exception;
+    void createBoard(Board board);
 
     /**
      * 根据论坛板块名获取论坛信息

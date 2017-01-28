@@ -44,13 +44,12 @@ public class UserServiceImpl implements IUserService {
      * @param id
      */
     @Override
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) {
         User user = this.get(id);
         if (user != null) {
             userMapper.delete(id);
-        } else {
-            throw new Exception();
         }
+        throw new CRUDException(ExceptionCode.HAVE_NOT_DATA, "删除的用户不存在");
 
     }
 
@@ -82,7 +81,7 @@ public class UserServiceImpl implements IUserService {
      * @param user
      */
     @Override
-    public void update(User user) throws Exception {
+    public void update(User user) {
         String userName = user.getUserName();
         User queryUser = userMapper.getUserByUserName(userName);
         if (queryUser == null) {
@@ -98,7 +97,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public User getUserByUserName(String userName) throws Exception{
+    public User getUserByUserName(String userName) {
         User user = userMapper.getUserByUserName(userName);
         if (user == null) {
             throw new CRUDException(ExceptionCode.HAVE_NOT_DATA,"用户名不存在");
@@ -112,7 +111,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public List<User> getAllUsers() throws Exception {
+    public List<User> getAllUsers() {
         List<User> userList = userMapper.getAllUsers();
         if (userList != null || userList.size() > 0) {
             return userList;

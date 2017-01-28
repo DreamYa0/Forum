@@ -17,7 +17,7 @@ public interface IBaseService<T> {
     void update(T t) throws Exception;
 
     // 删除
-    void delete(Integer id) throws Exception;
+    void delete(Integer id);
 
     // 查询
     T get(Integer id) throws NullPointerException;

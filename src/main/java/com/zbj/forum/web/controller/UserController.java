@@ -1,8 +1,8 @@
 package com.zbj.forum.web.controller;
 
 import com.zbj.forum.entity.User;
-import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.service.IUserService;
+import com.zbj.forum.utils.UserContext;
 import com.zbj.forum.web.common.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static com.zbj.forum.utils.CheckDataUtil.updateUserCheck;
 import static com.zbj.forum.web.common.CommonConstant.CLIENT_SECRET;
-import static com.zbj.forum.web.common.CommonConstant.MANAGE_USER;
 import static com.zbj.forum.web.common.CommonResult.STATUS_SUCCESS;
 import static com.zbj.forum.web.common.CommonResult.USER_USERPWD_EMPTY;
 
@@ -68,36 +65,18 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public CommonResult deleteUser(@RequestBody User user, HttpSession session,HttpServletResponse response) {
-        Integer loginUserId;
-        Integer deleteUserId;
-        try {
-            User loginUser = (User) session.getAttribute("userInSession");
-            loginUserId = loginUser.getId();
-            if (loginUser == null) {
-                return new CommonResult("当前用户没有登录!");
-            }
-            Integer userType = loginUser.getUserType();
-            if (userType != MANAGE_USER) {
-                response.sendError(response.SC_FORBIDDEN);
-                return new CommonResult("此登录的用户没有删除用户权限");
-            }
-            String userName = user.getUserName();
-            try {
-                User queryUser = userService.getUserByUserName(userName);
-                deleteUserId = queryUser.getId();
-                if (loginUserId == deleteUserId) {
-                    response.sendError(response.SC_FORBIDDEN);
-                    return new CommonResult("用户不能删除自己!");
-                }
-                userService.delete(deleteUserId);
-            } catch (NullPointerException e) {
-                return new CommonResult("删除的用户不存在!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResult("getSessionFailed!");
+    public CommonResult deleteUser(@RequestBody User user) {
+
+        // 从用户上下文中获取登录的用户
+        User loginUser = UserContext.getLoginUser();
+        Integer loginUserId = loginUser.getId();
+        String userName = user.getUserName();
+        User queryUser = userService.getUserByUserName(userName);
+        Integer deleteUserId = queryUser.getId();
+        if (loginUserId == deleteUserId) {
+            return new CommonResult("用户不能删除自己!");
         }
+        userService.delete(deleteUserId);
         return new CommonResult(STATUS_SUCCESS, "删除用户成功!");
     }
 
@@ -113,15 +92,7 @@ public class UserController {
         if (!updateUserCheck(user)) {
             return new CommonResult("参数错误!");
         }
-        try {
-            userService.update(user);
-        } catch (CRUDException e) {
-            e.printStackTrace();
-            return new CommonResult("更新的用户不存在!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResult("系统错误!");
-        }
+        userService.update(user);
         return new CommonResult(true, CommonResult.getStatusSuccess(), "用户更新成功!");
     }
 
@@ -135,17 +106,9 @@ public class UserController {
     public CommonResult getAllUsers(){
 
         List<User> users;
-        try {
-            users = userService.getAllUsers();
-            for (User user : users) {
-                user.setPassword(CLIENT_SECRET);
-            }
-        } catch (CRUDException e) {
-            e.printStackTrace();
-            return new CommonResult("数据库中没有用户!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new CommonResult("服务异常!");
+        users = userService.getAllUsers();
+        for (User user : users) {
+            user.setPassword(CLIENT_SECRET);
         }
         return new CommonResult(users);
     }
