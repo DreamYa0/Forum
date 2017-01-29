@@ -1,4 +1,4 @@
-package com.zbj.forum.web.interceptor;
+package com.zbj.forum.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.JoinPoint;

@@ -1,4 +1,4 @@
-package com.zbj.forum.web.interceptor;
+package com.zbj.forum.utils;
 
 import com.zbj.forum.exception.CRUDException;
 import com.zbj.forum.exception.ExceptionCode;
