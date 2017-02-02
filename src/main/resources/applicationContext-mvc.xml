@@ -65,6 +65,11 @@
     <!--声明日志记录类的Bean -->
     <bean id="LogHandler" class="com.zbj.forum.utils.LogHandler"/>
 
+    <!--声明AspectJ切面的Bean -->
+    <bean class="com.zbj.forum.utils.AspectJTest" factory-method="aspectOf">
+        <property name="userService" ref="userServiceImpl"/>
+    </bean>
+
     <!--aop注解配置-->
     <aop:aspectj-autoproxy/>
 
@@ -85,7 +90,8 @@
         <!--把LogHandler Bean声明为切面-->
         <aop:aspect ref="LogHandler">
             <!--定义切点 -->
-            <aop:pointcut id="LogHandlerMethod" expression="execution(* com.zbj.forum..*.*(..))"/>
+            <aop:pointcut id="LogHandlerMethod" expression="execution(* com.zbj.forum.service..*.*(..)) ||
+                          execution(* com.zbj.forum.web.controller..*.*(..))"/>
             <!--配置前置通知-->
             <aop:before method="log" pointcut-ref="LogHandlerMethod"/>
             <!--配置后置通知-->

@@ -1,7 +1,7 @@
 package com.zbj.forum.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.zbj.forum.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author dreamyao
@@ -14,8 +14,11 @@ public aspect AspectJTest {
      * 可以利用Spring依赖注入功能，
      * 为切面注入Bean
      */
-    @Autowired
     private IUserService userService;
+
+    public void setUserService(IUserService userService) {
+        this.userService = userService;
+    }
 
     public AspectJTest(){}
 
@@ -27,6 +30,6 @@ public aspect AspectJTest {
      * 创建后置通知
      */
     after():dreamyao(){
-
+        JSON.toJSONString(userService.getAllUsers());
     }
 }
