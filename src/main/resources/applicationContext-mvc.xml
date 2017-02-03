@@ -14,7 +14,8 @@
     http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
     http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
-	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 启动包扫描功能，以便注册带有@Controller、@Service、@repository、@Component等注解的类成为spring的bean -->
     <context:component-scan base-package="com.zbj.forum.web.controller"/>
@@ -24,6 +25,9 @@
 
     <!--开启MVC注解初始化7个转换器-->
     <mvc:annotation-driven/>
+
+    <!--开启动态代理功能-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!--配置处理器适配器  -->
     <bean id="handlerMapping"
@@ -73,9 +77,6 @@
         <!--<property name="userService" ref="userServiceImpl"/>-->
     <!--</bean>-->
 
-    <!--aop注解配置-->
-    <aop:aspectj-autoproxy/>
-
     <!--配置AOP -->
     <aop:config>
         <!--定义AOP通知器 -->
@@ -86,7 +87,7 @@
         <aop:aspect ref="ExceptionHandler">
             <!--定义切点 -->
             <aop:pointcut id="ExceptionHandlerMethod" expression="execution(* com.zbj.forum.web.controller..*.*(..))"/>
-            <!--配置环绕通知，环绕通知为最强大的通知具备有前置通知、后置通知、异常通知的所有功能 -->
+            <!--配置环绕通知，环绕通知为最强大的通知具备有前置通知、后置通知、返回通知、异常通知的所有功能 -->
             <aop:around pointcut-ref="ExceptionHandlerMethod" method="ExceptionHandling"/>
         </aop:aspect>
 
@@ -99,6 +100,7 @@
             <aop:before method="log" pointcut-ref="LogHandlerMethod"/>
             <!--配置后置通知-->
             <aop:after method="logArg" pointcut-ref="LogHandlerMethod"/>
+            <!--配置返回通知-->
             <aop:after-returning method="logArgAndReturn" returning="returnObj" pointcut-ref="LogHandlerMethod"/>
         </aop:aspect>
     </aop:config>

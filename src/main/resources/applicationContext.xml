@@ -82,12 +82,19 @@
     <tx:advice id="advice" transaction-manager="transactionManager">
         <!-- 指定具体需要拦截的方法 -->
         <tx:attributes>
-            <!-- name指具体需要拦截的方法名，propagation表示传播行，read-only="true"表示事务只读，
-             isolation="READ_COMMITTED"表示隔离级别是提交读 -->
+            <!-- name指具体需要拦截的方法名，propagation表示传播特性，read-only="true"表示事务只读，
+             isolation="READ_COMMITTED"表示隔离级别是提交读,
+             REQUIRED-支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择
+             SUPPORTS-支持当前事务，如果当前没有事务，就以非事务方式执行
+             MANDATORY-支持当前事务，如果当前没有事务，就抛出异常
+             REQUIRES_NEW-新建事务，如果当前存在事务，把当前事务挂起
+             NOT_SUPPORTED-以非事务方式执行操作，如果当前存在事务，就把当前事务挂
+             NEVER-以非事务方式执行，如果当前存在事务，则抛出异常
+             NESTED-如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则进行与REQUIRED类似的操作-->
             <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
             <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
             <tx:method name="query*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="*"/>
+            <tx:method name="*" propagation="REQUIRED" rollback-for="Exception,CRUDException"/>
         </tx:attributes>
     </tx:advice>
 
