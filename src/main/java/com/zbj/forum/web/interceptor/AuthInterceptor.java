@@ -15,7 +15,7 @@ import static com.zbj.forum.web.common.CommonConstant.MANAGE_USER;
  * Created by DreamYao on 2017/1/24.
  */
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-    // 拦截请求路由地址
+
     private static final String LOGIN_PATH = "/login";
     private static final String LOGOUT_PATH = "/logout";
     private static final String INDEX_PATH = "/index";
@@ -37,9 +37,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                     response.sendError(response.SC_UNAUTHORIZED, "用户没有登录!");
                 }
                 return false;
-                // 拦截路由地址
             }
             addPermissionsPath();
+            // 拦截路由地址
             if (PERMISSIONS_PATH.contains(requestURI)) {
                 // 权限拦截,只有管理员才能访问下面的路由
                 if (user.getUserType() != MANAGE_USER) {
