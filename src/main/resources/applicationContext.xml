@@ -60,6 +60,7 @@
 
     <!-- mybatis 自动扫描 mapper 类 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定mapper接口所在的路径-->
         <property name="basePackage" value="com.zbj.forum.mapper"/>
     </bean>
 
@@ -69,6 +70,7 @@
         <property name="typeAliasesPackage"
                   value="com.zbj.forum.entity,com.zbj.forum.query"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--指定mapper xml文件所在的路径-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
 
