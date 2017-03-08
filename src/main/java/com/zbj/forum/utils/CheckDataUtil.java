@@ -14,26 +14,12 @@ public class CheckDataUtil {
         Integer userType = user.getUserType();
         Integer locked = user.getLocked();
         Integer credit = user.getCredit();
-        if (user == null || userName == null || userName.equals("")) {
+        if (user == null || userName == null || userName.equals("") ||
+                userType == null || locked == null || credit != null) {
             return false;
-        } else if (userType != null) {
-            if (userType == 2 || userType == 1) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (locked != null) {
-            if (locked == 0 || locked == 1) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (credit != null) {
-            if (credit >= 0) {
-                return true;
-            } else {
-                return false;
-            }
+        } else if (userType != 2 || userType != 1 || locked != 0 || locked != 1 ||
+                credit < 0) {
+            return false;
         } else {
             return true;
         }

@@ -53,7 +53,6 @@ public class BoardController {
             return new Result(PARAMETER_ERROR,"参数错误!");
         }
         Board board = boardService.getBoardMassage(boardName);
-
         return new Result<>(board);
     }
 
@@ -66,8 +65,8 @@ public class BoardController {
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Result<Boolean> updateBoard(@RequestBody Board board) {
-        Result<Boolean> result=null;
         if (!updateBoardCheck(board)) {
+            Result<Boolean> result=null;
             result.setErrorCode(PARAMETER_ERROR);
             result.setErrorMsg("参数错误!");
             return result;
