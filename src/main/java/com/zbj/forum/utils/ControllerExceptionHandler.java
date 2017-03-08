@@ -20,6 +20,7 @@ public class ControllerExceptionHandler {
         } catch (CRUDException e) {
             result = new Result<>(e.getCode(), e.getMessage());
         } catch (Exception e) {
+            e.printStackTrace();
             result = new Result<>(ExceptionCode.SYSTEM_ERROR, "系统服务异常!");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
