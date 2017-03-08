@@ -28,12 +28,13 @@ public class BoardController {
 
     /**
      * 创建论坛板块
+     *
      * @param board
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/createBoard",method = RequestMethod.POST)
-    public CommonResult createBoard(@RequestBody Board board){
+    @RequestMapping(value = "/createBoard", method = RequestMethod.POST)
+    public CommonResult createBoard(@RequestBody Board board) {
         if (!CheckDataUtil.createBoardCheck(board)) {
             return new CommonResult("参数错误!");
         }
@@ -43,14 +44,15 @@ public class BoardController {
 
     /**
      * 根据论坛板块名称查询论坛信息
+     *
      * @param
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/getBoardMessage",method = RequestMethod.POST)
-    public Result<Board> getBoardMessage(String boardName){
+    @RequestMapping(value = "/getBoardMessage", method = RequestMethod.POST)
+    public Result<Board> getBoardMessage(String boardName) {
         if (boardName.equals("") && boardName.isEmpty()) {
-            return new Result(PARAMETER_ERROR,"参数错误!");
+            return new Result(PARAMETER_ERROR, "参数错误!");
         }
         Board board = boardService.getBoardMassage(boardName);
         return new Result<>(board);
@@ -66,7 +68,7 @@ public class BoardController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Result<Boolean> updateBoard(@RequestBody Board board) {
         if (!updateBoardCheck(board)) {
-            Result<Boolean> result=null;
+            Result<Boolean> result = null;
             result.setErrorCode(PARAMETER_ERROR);
             result.setErrorMsg("参数错误!");
             return result;

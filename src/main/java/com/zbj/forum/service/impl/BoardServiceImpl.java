@@ -28,7 +28,7 @@ public class BoardServiceImpl implements IBoardService {
      */
     @Override
     public void createBoard(Board board) {
-        String boardName=board.getBoardName();
+        String boardName = board.getBoardName();
         Board queryBoard = this.getBoardMassage(boardName);
         if (queryBoard != null) {
             throw new CRUDException(ExceptionCode.HAVE_REPEAT_DATA, "有相同的论坛板块名存在!");
@@ -43,7 +43,7 @@ public class BoardServiceImpl implements IBoardService {
      * @return
      */
     @Override
-    public Board getBoardMassage(String boardName){
+    public Board getBoardMassage(String boardName) {
         Board board = boardMapper.getBoardMassage(boardName);
         if (board == null) {
             throw new CRUDException(ExceptionCode.HAVE_NOT_DATA, "无对应的数据!");
@@ -61,7 +61,7 @@ public class BoardServiceImpl implements IBoardService {
     public Board getMessageById(Integer id) throws CRUDException {
         Board board = boardMapper.get(id);
         if (board == null) {
-            throw new CRUDException(ExceptionCode.HAVE_NOT_DATA,"无对应数据!");
+            throw new CRUDException(ExceptionCode.HAVE_NOT_DATA, "无对应数据!");
         }
         return board;
     }
@@ -93,7 +93,7 @@ public class BoardServiceImpl implements IBoardService {
      */
     @Override
     public void update(Board board) {
-        Integer id=board.getId();
+        Integer id = board.getId();
         try {
             Board queryBoard = this.getMessageById(id);
             queryBoard.setBoardName(board.getBoardName());
