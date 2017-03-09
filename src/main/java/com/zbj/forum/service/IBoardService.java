@@ -7,7 +7,7 @@ import com.zbj.forum.mapper.BaseMapper;
 /**
  * Created by dreamyao on 2017/1/27.
  */
-public interface IBoardService extends BaseMapper<Board> {
+public interface IBoardService {
 
     /**
      * 创建论坛板块
@@ -30,4 +30,9 @@ public interface IBoardService extends BaseMapper<Board> {
      */
     Board getMessageById(Integer id) throws CRUDException;
 
+    /**
+     * 更新
+     * @param board
+     */
+    void update(Board board);
 }

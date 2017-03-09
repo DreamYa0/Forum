@@ -67,26 +67,6 @@ public class BoardServiceImpl implements IBoardService {
     }
 
     /**
-     * 保存
-     *
-     * @param board
-     */
-    @Override
-    public void save(Board board) {
-
-    }
-
-    /**
-     * 删除
-     *
-     * @param id
-     */
-    @Override
-    public void delete(Integer id) {
-
-    }
-
-    /**
      * 更新
      *
      * @param board
@@ -103,46 +83,5 @@ public class BoardServiceImpl implements IBoardService {
             e.printStackTrace();
             throw new CRUDException(ExceptionCode.HAVE_NOT_DATA, "论坛板块ID不存在，更新失败!");
         }
-    }
-
-    /**
-     * 根据id来查找
-     *
-     * @param id
-     * @return
-     */
-    @Override
-    public Board get(Integer id) {
-        return null;
-    }
-
-    /**
-     * 得到所有
-     *
-     * @return
-     */
-    @Override
-    public List<Board> getAll() {
-        return null;
-    }
-
-    /**
-     * 查询统计数
-     *
-     * @param Query
-     */
-    @Override
-    public Integer getCount(BaseQuery Query) {
-        return null;
-    }
-
-    /**
-     * 高级查询+分页
-     *
-     * @param Query
-     */
-    @Override
-    public List<Board> findByQuery(BaseQuery Query) {
-        return null;
     }
 }
